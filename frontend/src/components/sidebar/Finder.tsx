@@ -1,6 +1,4 @@
 import {
-  AvatarGroup,
-  Avatar,
   Divider,
   Card,
   CardHeader,
@@ -8,18 +6,22 @@ import {
   CardFooter,
   Autocomplete,
   AutocompleteItem,
-  Button,
 } from "@nextui-org/react";
 import { PointCard } from "./PointCard";
 import { interestPoints as data } from "../../utils/data";
-import { useState } from "react";
+import { PointDetails } from "./PointDetails";
+import { useAppStore } from "../../store/useApp";
 
 export const Finder = () => {
-  const [selected, setSelected] = useState<null | any>();
+  const { map, selectedPoint, setSelectedPoint } = useAppStore(
+    (state) => state,
+  );
 
   const onSelectionChange = (key: React.Key) => {
     const find = data.find((point) => point.id == key);
-    setSelected(find);
+    if (!find) return console.log("Point not found");
+    setSelectedPoint(find);
+    map.flyTo({ center: [find.lng, find.lat], zoom: 15 });
   };
 
   const onInputChange = (value: string) => {
@@ -43,35 +45,12 @@ export const Finder = () => {
         </Autocomplete>
       </CardHeader>
       <CardBody>
-        {selected ? (
-          <div>
-            <p>{selected.name}</p>
-            <p>{selected.description}</p>
-            <p>{selected.lat}</p>
-            <p>{selected.lgn}</p>
-            <Button onPress={() => setSelected(null)}>&times;</Button>
-            <AvatarGroup
-              isBordered
-              max={3}
-              total={10}
-              renderCount={(count) => (
-                <p className="text-small text-foreground font-medium ms-2">
-                  +{count} others
-                </p>
-              )}
-            >
-              <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-              <Avatar src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
-              <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-              <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-              <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
-              <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
-            </AvatarGroup>
-          </div>
+        {selectedPoint ? (
+          <PointDetails />
         ) : (
           <div className="grid grid-cols-2 grid-flow-row gap-4">
             {data.map((point) => (
-              <PointCard key={point.id} point={point} callback={setSelected} />
+              <PointCard key={point.id} point={point} />
             ))}
           </div>
         )}

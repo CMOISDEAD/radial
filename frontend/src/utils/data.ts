@@ -1,62 +1,105 @@
 export const interestPoints = [
   {
     id: 1,
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Casa_de_la_Cultura_Ecuatoriana_01.JPG/1200px-Casa_de_la_Cultura_Ecuatoriana_01.JPG",
-    name: "Casa de la Cultura",
-    value: "Casa de la Cultura de la Ciudad de México",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "Casa de la Cultura de la Ciudad de México",
+    img: "https://www.semana.com/resizer/wQ4F8cSwlYYL-sZNWh9UQJDKdFI=/1280x720/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/P3NAEEX3GRFABP3RD2WWPY4QM4.jpg",
+    name: "Museo del Arte de Pereira",
+    value: "Museo del Arte de Pereira",
+    lat: 4.804359937903271,
+    lng: -75.69598400619088,
+    description:
+      "El Museo del Arte de Pereira es un museo de arte en Pereira, Colombia. Fue fundado en 1978 y es uno de los museos más importantes de la región del Eje Cafetero.",
     category: "Cultural",
+    icon: "museum",
   },
   {
     id: 2,
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Museo_de_la_Ciudad_de_M%C3%A9xico._Fotograf%C3%ADa_Viviana_Mart%C3%ADnez_2017.jpg",
-    name: "Museo de la Ciudad de México",
-    value: "Museo de la Ciudad de México",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "Museo de la Ciudad de México",
+    img: "https://www.eldiario.com.co/wp-content/uploads/2019/05/lucy-tejada.jpg",
+    name: "Centro Cultural Lucy Tejada",
+    value: "Centro Cultural Lucy Tejada",
+    description:
+      "El Centro Cultural Lucy Tejada es un centro cultural en Pereira, Colombia. Fue fundado en 1986 y es uno de los centros culturales más importantes de la región del Eje Cafetero.",
+    lat: 4.81222838476927,
+    lng: -75.69230642700612,
     category: "Cultural",
+    icon: "museum",
   },
   {
     id: 3,
-    img: "https://www.mexicoescultura.com/galerias/espacios/principal/museo_arte_popular_2.jpg",
-    name: "Museo de Arte Popular",
-    value: "Museo de Arte Popular",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "Museo de Arte Popular",
-    category: "Cultural",
+    img: "https://cdn0.matrimonio.com.co/vendor/5418/3_2/960/jpg/fachada-01_10_95418.jpeg",
+    name: "Gran Hotel Pereira",
+    value: "Gran Hotel Pereira",
+    description:
+      "El Gran Hotel Pereira es un hotel en Pereira, Colombia. Fue fundado en 1948 y es uno de los hoteles más importantes de la región del Eje Cafetero.",
+    lat: 4.8129400485754985,
+    lng: -75.69449216948566,
+    category: "Hotel",
+    icon: "hotel",
   },
   {
     id: 4,
-    img: "https://www.restauranteelcardenal.com/images/00.jpg?crc=3765039244",
-    name: "Restaurante 'El Cardenal'",
-    value: "Restaurante 'El Cardenal'",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "Restaurante 'El Cardenal'",
-    category: "Gastronomy",
+    img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/ac/e5/61/salon-principal.jpg?w=1200&h=-1&s=1",
+    name: "Restaurante El Rancherito",
+    value: "Restaurante El Rancherito",
+    description:
+      "El Restaurante El Rancherito es un restaurante en Pereira, Colombia. Fue fundado en 1986 y es uno de los restaurantes más importantes de la región del Eje Cafetero.",
+    lat: 4.81174919109182,
+    lng: -75.69866555246281,
+    category: "Restaurant",
+    icon: "restaurant",
+  },
+];
+
+export const features = [
+  {
+    type: "Feature",
+    properties: {
+      id: 1,
+      description:
+        "El Museo del Arte de Pereira es un museo de arte en Pereira, Colombia. Fue fundado en 1978 y es uno de los museos más importantes de la región del Eje Cafetero.",
+      icon: "museum",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [-75.69598400619088, 4.804359937903271],
+    },
   },
   {
-    id: 5,
-    img: "https://www.laguiacdmx.com/wp-content/uploads/2022/12/cafe-de-tacuva-1.jpg",
-    name: "Café de Tacuba",
-    value: "Café de Tacuba",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "Café de Tacuba",
-    category: "Gastronomy",
+    type: "Feature",
+    properties: {
+      id: 2,
+      description:
+        "El Centro Cultural Lucy Tejada es un centro cultural en Pereira, Colombia. Fue fundado en 1986 y es uno de los centros culturales más importantes de la región del Eje Cafetero.",
+      icon: "museum",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [-75.69230642700612, 4.81222838476927],
+    },
   },
   {
-    id: 6,
-    img: "https://cdn.onefc.com/wp-content/uploads/2020/03/Christian-Lee-Ken-Lee-Angela-Lee-United-MMA-1200X800.jpg",
-    name: "MMA Gym 'La Roca'",
-    value: "MMA Gym 'La Roca'",
-    lat: 19.4326,
-    lng: -99.1332,
-    description: "MMA Gym 'La Roca'",
-    category: "Sports",
+    type: "Feature",
+    properties: {
+      id: 3,
+      description:
+        "El Gran Hotel Pereira es un hotel en Pereira, Colombia. Fue fundado en 1948 y es uno de los hoteles más importantes de la región del Eje Cafetero.",
+      icon: "lodging",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [-75.69449216948566, 4.8129400485754985],
+    },
+  },
+  {
+    type: "Feature",
+    properties: {
+      id: 4,
+      description:
+        "El Restaurante El Rancherito es un restaurante en Pereira, Colombia. Fue fundado en 1986 y es uno de los restaurantes más importantes de la región del Eje Cafetero.",
+      icon: "restaurant",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [-75.69866555246281, 4.81174919109182],
+    },
   },
 ];

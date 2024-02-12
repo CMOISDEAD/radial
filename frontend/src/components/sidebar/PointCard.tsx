@@ -1,15 +1,17 @@
 import { Image, Card, CardBody, CardFooter } from "@nextui-org/react";
+import { useAppStore } from "../../store/useApp";
 
 interface Props {
-  point: any;
-  callback: (point: any) => void;
+  point: Point;
 }
 
-export const PointCard = ({ point, callback }: Props) => {
+export const PointCard = ({ point }: Props) => {
+  const { map, setSelectedPoint } = useAppStore((state) => state);
   const { img, name } = point;
 
   const handleSelect = () => {
-    callback(point);
+    setSelectedPoint(point);
+    map.flyTo({ center: [point.lng, point.lat], zoom: 15 });
   };
 
   return (
