@@ -1,36 +1,46 @@
 import { useEffect, useRef, useState } from "react";
 import { initMap } from "../utils/mapinit";
 import { Map } from "mapbox-gl";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import { generateNewMarker } from "../utils/markers";
 import { useAppStore } from "../store/useApp";
 import { interestPoints, features } from "../utils/data";
 
+import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+
 export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const [coords, setCoords] = useState({
-    lat: 25.66901932031443,
-    lng: -100.31019063199852,
+    lat: 4.556260250318374,
+    lng: -75.65964791577778,
   });
   const initRef = useRef<Map | null>(null);
   const { setSelectedPoint, setMap } = useAppStore((state) => state);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCoords({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      () => alert("No se pudo obtener tu ubicación"),
-      {
-        enableHighAccuracy: true,
-      },
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => {
+    //     setCoords({
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude,
+    //     });
+    //   },
+    //   () => alert("No se pudo obtener tu ubicación"),
+    //   {
+    //     enableHighAccuracy: true,
+    //   },
+    // );
   }, []);
 
   useEffect(() => {
     if (container.current) {
       initRef.current = initMap(container.current, coords);
+      const directions = new MapboxDirections({
+        accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
+        unit: "metric",
+      });
+      directions.setOrigin([coords.lng, coords.lat]);
+      initRef.current.addControl(directions, "top-right");
+      // initRef.current.removeControl(directions);
       setMap(initRef.current);
     }
   }, [container, coords, setMap]);
@@ -47,7 +57,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
           data: {
             type: "FeatureCollection",
             //ts-expect-error - This is a valid check
-            features: features as any,
+            features: features,
           },
         });
         initRef.current!.addLayer({
@@ -79,6 +89,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
           initRef.current!.getCanvas().style.cursor = "";
         });
       });
+
     initRef.current &&
       initRef.current.on("dblclick", ({ lngLat }) =>
         generateNewMarker({

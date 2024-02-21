@@ -4,8 +4,8 @@ export const interestPoints = [
     img: "https://www.semana.com/resizer/wQ4F8cSwlYYL-sZNWh9UQJDKdFI=/1280x720/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/P3NAEEX3GRFABP3RD2WWPY4QM4.jpg",
     name: "Museo del Arte de Pereira",
     value: "Museo del Arte de Pereira",
-    lat: 4.804359937903271,
-    lng: -75.69598400619088,
+    lat: 4.557879610270007,
+    lng: -75.65709140446967,
     description:
       "El Museo del Arte de Pereira es un museo de arte en Pereira, Colombia. Fue fundado en 1978 y es uno de los museos más importantes de la región del Eje Cafetero.",
     category: "Cultural",
@@ -18,8 +18,8 @@ export const interestPoints = [
     value: "Centro Cultural Lucy Tejada",
     description:
       "El Centro Cultural Lucy Tejada es un centro cultural en Pereira, Colombia. Fue fundado en 1986 y es uno de los centros culturales más importantes de la región del Eje Cafetero.",
-    lat: 4.81222838476927,
-    lng: -75.69230642700612,
+    lat: 4.554232639123157,
+    lng: -75.65763857105533,
     category: "Cultural",
     icon: "museum",
   },
@@ -30,8 +30,8 @@ export const interestPoints = [
     value: "Gran Hotel Pereira",
     description:
       "El Gran Hotel Pereira es un hotel en Pereira, Colombia. Fue fundado en 1948 y es uno de los hoteles más importantes de la región del Eje Cafetero.",
-    lat: 4.8129400485754985,
-    lng: -75.69449216948566,
+    lat: 4.558188492378093,
+    lng: -75.66021084504499,
     category: "Hotel",
     icon: "hotel",
   },
@@ -42,8 +42,8 @@ export const interestPoints = [
     value: "Restaurante El Rancherito",
     description:
       "El Restaurante El Rancherito es un restaurante en Pereira, Colombia. Fue fundado en 1986 y es uno de los restaurantes más importantes de la región del Eje Cafetero.",
-    lat: 4.81174919109182,
-    lng: -75.69866555246281,
+    lat: 4.555162581350743,
+    lng: -75.66097026213372,
     category: "Restaurant",
     icon: "restaurant",
   },
@@ -60,7 +60,7 @@ export const features = [
     },
     geometry: {
       type: "Point",
-      coordinates: [-75.69598400619088, 4.804359937903271],
+      coordinates: [-75.65709140446967, 4.557879610270007],
     },
   },
   {
@@ -73,7 +73,7 @@ export const features = [
     },
     geometry: {
       type: "Point",
-      coordinates: [-75.69230642700612, 4.81222838476927],
+      coordinates: [-75.65763857105533, 4.554232639123157],
     },
   },
   {
@@ -86,7 +86,7 @@ export const features = [
     },
     geometry: {
       type: "Point",
-      coordinates: [-75.69449216948566, 4.8129400485754985],
+      coordinates: [-75.66021084504499, 4.558188492378093],
     },
   },
   {
@@ -99,7 +99,7 @@ export const features = [
     },
     geometry: {
       type: "Point",
-      coordinates: [-75.69866555246281, 4.81174919109182],
+      coordinates: [-75.66097026213372, 4.555162581350743],
     },
   },
 ];

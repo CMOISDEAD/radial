@@ -9,4 +9,17 @@ declare global {
     lat: number;
     lng: number;
   }
+
+  interface Feature {
+    type: string;
+    properties: {
+      id: number;
+      description: string;
+      icon: string;
+    };
+    geometry: {
+      type: string;
+      coordinates: number[];
+    };
+  }
 }

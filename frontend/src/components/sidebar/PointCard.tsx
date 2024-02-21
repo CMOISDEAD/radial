@@ -11,7 +11,7 @@ export const PointCard = ({ point }: Props) => {
 
   const handleSelect = () => {
     setSelectedPoint(point);
-    map.flyTo({ center: [point.lng, point.lat], zoom: 15 });
+    map!.flyTo({ center: [point.lng, point.lat], zoom: 15 });
   };
 
   return (

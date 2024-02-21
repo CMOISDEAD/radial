@@ -12,7 +12,7 @@ export const PointDetails = () => {
         isBlurred
         src={point.img}
         alt={`${point.name} image site`}
-        className="h-56 object-cover w-full"
+        className="h-56 max-w-lg object-cover w-full"
         width="full"
       />
       <div className="my-4">

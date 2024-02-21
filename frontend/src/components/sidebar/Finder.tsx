@@ -21,7 +21,7 @@ export const Finder = () => {
     const find = data.find((point) => point.id == key);
     if (!find) return console.log("Point not found");
     setSelectedPoint(find);
-    map.flyTo({ center: [find.lng, find.lat], zoom: 15 });
+    map!.flyTo({ center: [find.lng, find.lat], zoom: 15 });
   };
 
   const onInputChange = (value: string) => {
@@ -30,7 +30,7 @@ export const Finder = () => {
   };
 
   return (
-    <Card className="h-full">
+    <Card className="max-w-lg bg-content1/70 backdrop-blur h-full" shadow="lg">
       <CardHeader>
         <Autocomplete
           label="Select an interest point"
