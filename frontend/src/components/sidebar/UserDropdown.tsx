@@ -8,6 +8,7 @@ import {
   Avatar,
 } from "@nextui-org/react";
 import { PiPlus } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const userImage = "https://i.pravatar.cc/150?u=a042581f4e29026024d";
 
@@ -103,7 +104,9 @@ export const UserDropdown = () => {
 
         <DropdownSection aria-label="Help & Feedback">
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-          <DropdownItem key="logout">Log Out</DropdownItem>
+          <DropdownItem key="logout" href="/login">
+            LogOut
+          </DropdownItem>
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
