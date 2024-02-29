@@ -6,7 +6,7 @@ const router = express();
 const prisma = new PrismaClient();
 
 /** Return all the places in the db */
-router.get("/places", async (req: Request, res: Response) => {
+router.get("/places", async (_req: Request, res: Response) => {
   try {
     const places = await prisma.place.findMany();
     res.status(200).send(places);
@@ -17,7 +17,7 @@ router.get("/places", async (req: Request, res: Response) => {
 });
 
 /** Return the first place with param id */
-router.get("/places", async (req: Request, res: Response) => {
+router.get("/places/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const place = await prisma.place.findFirst({
@@ -34,7 +34,7 @@ router.get("/places", async (req: Request, res: Response) => {
 });
 
 /** Store a place on the db */
-router.post("/places", async (req: Request, res: Response) => {
+router.post("/places", async (_req: Request, res: Response) => {
   res.status(200).send("");
 });
 
