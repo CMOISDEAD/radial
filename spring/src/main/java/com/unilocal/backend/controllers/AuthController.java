@@ -1,23 +1,55 @@
 package com.unilocal.backend.controllers;
 
 import com.unilocal.backend.models.User;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.unilocal.backend.service.UserService;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class AuthController {
+class AuthRequest {
+  public String username;
+  public String password;
+}
 
-  @GetMapping("/login")
-  public String login() {
-    User user = new User("camilo", "doom", "camilo@email.com", "123",
-        "colombia", "Armenia");
-    return "Please login";
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+  @Autowired
+  UserService userService;
+
+  /**
+   * Login a user
+   *
+   * @param request user credentials
+   * @return HTTP response with the user logged in and HTTP status
+   */
+  @PostMapping("/login")
+  public ResponseEntity<User> login(@RequestBody AuthRequest request) {
+    Optional<User> user = userService.findByUsername(request.username);
+    System.out.println(user.isPresent());
+    if (user.isPresent() && user.get().getPassword().equals(request.password)) {
+      return ResponseEntity.status(200).body(user.get());
+    }
+    return ResponseEntity.status(401).build();
   }
 
-  @PostMapping("/login")
-  public String login(@RequestBody() String username) {
-    return String.format("Hello %s!", username);
+  /**
+   * Register a new user
+   *
+   * @param user user to register
+   * @return http response with the user created and HTTP status
+   */
+  @PostMapping("/register")
+  public ResponseEntity<User> login(@RequestBody() User user) {
+    Optional<User> existingUser = userService.findByUsername(user.getUsername());
+    if (existingUser.isPresent()) {
+      return ResponseEntity.status(409).build();
+    }
+    // TODO: encrypt password
+    return ResponseEntity.status(201).body(userService.save(user));
   }
 }

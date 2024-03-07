@@ -1,3 +1,6 @@
+### ENV ###
+application.properties
+
 HELP.md
 .gradle
 build/
