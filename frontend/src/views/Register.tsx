@@ -8,14 +8,19 @@ import {
 } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { notify } from "../utils/notifications";
 
 type Inputs = {
+  name: string;
+  lastname: string;
   username: string;
   password: string;
+  email: string;
+  city: string;
 };
 
-export const Login = () => {
+export const Register = () => {
   const {
     register,
     handleSubmit,
@@ -23,14 +28,13 @@ export const Login = () => {
   } = useForm<Inputs>();
   const navigate = useNavigate();
 
-  const handleLogIn: SubmitHandler<Inputs> = (data) => {
-    const { username, password } = data;
-    console.log({ username, password });
+  const handleRegister: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
     notify({
-      msg: "Logged In",
+      msg: "Register",
       type: "success",
     });
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -41,20 +45,31 @@ export const Login = () => {
       >
         <CardBody>
           <form
-            onSubmit={handleSubmit(handleLogIn)}
+            onSubmit={handleSubmit(handleRegister)}
             className="flex flex-col gap-2 justify-center h-full"
           >
-            <h1 className="text-3xl font-bold capitalize">Log In</h1>
+            <h1 className="text-3xl font-bold capitalize">Register</h1>
             <div className="flex flex-col gap-4">
               <Input
                 required
                 type="text"
-                label="Username"
+                label="Name"
                 placeholder="Jhon Doe"
                 className="max-w-xs"
-                {...register("username", { required: true })}
+                {...register("name", { required: true })}
               />
-              {errors.username && (
+              {errors.name && (
+                <p className="text-xs text-warning">This field is required</p>
+              )}
+              <Input
+                required
+                type="text"
+                label="LastName"
+                placeholder="Smith"
+                className="max-w-xs"
+                {...register("lastname", { required: true })}
+              />
+              {errors.lastname && (
                 <p className="text-xs text-warning">This field is required</p>
               )}
               <Input
@@ -68,20 +83,42 @@ export const Login = () => {
               {errors.password && (
                 <p className="text-xs text-warning">This field is required</p>
               )}
+              <Input
+                required
+                type="email"
+                label="email"
+                placeholder="email@ibm.com"
+                className="max-w-xs"
+                {...register("email", { required: true })}
+              />
+              {errors.email && (
+                <p className="text-xs text-warning">This field is required</p>
+              )}
+              <Input
+                required
+                type="text"
+                label="City"
+                placeholder="Armenia"
+                className="max-w-xs"
+                {...register("city", { required: true })}
+              />
+              {errors.city && (
+                <p className="text-xs text-warning">This field is required</p>
+              )}
             </div>
             <Button color="primary" fullWidth type="submit">
-              Log In
+              Register
             </Button>
           </form>
         </CardBody>
         <CardFooter>
           <p className="text-xs text-neutral-500">
-            Don't have an account?{" "}
+            You already have an account?{" "}
             <Link
-              to="/"
+              to="/login"
               className="text-primary hover:text-success transition-colors"
             >
-              Sign Up
+              Log In
             </Link>
           </p>
         </CardFooter>

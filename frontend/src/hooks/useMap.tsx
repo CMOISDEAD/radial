@@ -40,7 +40,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
       });
       directions.setOrigin([coords.lng, coords.lat]);
       initRef.current.addControl(directions, "top-right");
-      // initRef.current.removeControl(directions);
+      initRef.current.removeControl(directions);
       setMap(initRef.current);
     }
   }, [container, coords, setMap]);

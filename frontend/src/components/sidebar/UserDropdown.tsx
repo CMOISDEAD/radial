@@ -7,12 +7,20 @@ import {
   User,
   Avatar,
 } from "@nextui-org/react";
+import { useTheme } from "next-themes";
+import { ChangeEvent } from "react";
 import { PiPlus } from "react-icons/pi";
-import { Link } from "react-router-dom";
 
 const userImage = "https://i.pravatar.cc/150?u=a042581f4e29026024d";
 
 export const UserDropdown = () => {
+  const { setTheme } = useTheme();
+
+  const handleTheme = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.target;
+    setTheme(value.toLowerCase());
+  };
+
   return (
     <Dropdown
       showArrow
@@ -91,6 +99,7 @@ export const UserDropdown = () => {
                 className="z-10 outline-none w-16 py-0.5 rounded-md text-tiny group-data-[hover=true]:border-default-500 border-small border-default-300 dark:border-default-200 bg-transparent text-default-500"
                 id="theme"
                 name="theme"
+                onChange={handleTheme}
               >
                 <option>System</option>
                 <option>Dark</option>
