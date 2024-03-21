@@ -5,6 +5,11 @@ import type { Request, Response } from "express";
 const router = express();
 const prisma = new PrismaClient();
 
+router.get("/all", (req, res) => {
+  console.log("All users");
+  res.status(200).send("All users");
+});
+
 // Login a user
 router.post("/login", async (req: Request, res: Response) => {
   try {
@@ -41,3 +46,5 @@ router.post("/register", async (req: Request, res: Response) => {
     res.status(500).send("There was an error trying to register");
   }
 });
+
+export default router;
