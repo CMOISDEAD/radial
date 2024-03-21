@@ -1,5 +1,7 @@
 package com.unilocal.backend.controllers;
 
+import com.unilocal.backend.dto.RegisterUserDTO;
+import com.unilocal.backend.dto.UpdateUserDTO;
 import com.unilocal.backend.models.User;
 import com.unilocal.backend.service.UserService;
 import java.util.Optional;
@@ -44,12 +46,11 @@ public class AuthController {
    * @return http response with the user created and HTTP status
    */
   @PostMapping("/register")
-  public ResponseEntity<User> login(@RequestBody() User user) {
-    Optional<User> existingUser = userService.findByUsername(user.getUsername());
+  public ResponseEntity<User> login(@RequestBody() RegisterUserDTO user) {
+    Optional<User> existingUser = userService.findByUsername(user.username());
     if (existingUser.isPresent()) {
       return ResponseEntity.status(409).build();
     }
-    // TODO: encrypt password
     return ResponseEntity.status(201).body(userService.save(user));
   }
 }
