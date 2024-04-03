@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { notify } from "../utils/notifications";
+import { Social } from "../components/auth/Social";
 
 type Inputs = {
   username: string;
@@ -73,8 +74,18 @@ export const Login = () => {
               Log In
             </Button>
           </form>
+          <Social />
         </CardBody>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-2 content-center justify-start items-start">
+          <p className="text-xs text-neutral-500">
+            Don't remember your password?{" "}
+            <Link
+              to="#"
+              className="text-primary hover:text-success transition-colors"
+            >
+              Reset Password
+            </Link>
+          </p>
           <p className="text-xs text-neutral-500">
             Don't have an account?{" "}
             <Link

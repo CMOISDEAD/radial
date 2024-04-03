@@ -30,7 +30,7 @@ export const Finder = () => {
   };
 
   return (
-    <Card className="max-w-lg bg-content1/70 backdrop-blur h-full" shadow="lg">
+    <Card className="w-[40vw] bg-content1/70 backdrop-blur h-full" shadow="lg">
       <CardHeader>
         <Autocomplete
           label="Select an interest point"

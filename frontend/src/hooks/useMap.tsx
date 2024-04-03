@@ -17,30 +17,8 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const { setSelectedPoint, setMap } = useAppStore((state) => state);
 
   useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     setCoords({
-    //       lat: position.coords.latitude,
-    //       lng: position.coords.longitude,
-    //     });
-    //   },
-    //   () => alert("No se pudo obtener tu ubicación"),
-    //   {
-    //     enableHighAccuracy: true,
-    //   },
-    // );
-  }, []);
-
-  useEffect(() => {
     if (container.current) {
       initRef.current = initMap(container.current, coords);
-      const directions = new MapboxDirections({
-        accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
-        unit: "metric",
-      });
-      directions.setOrigin([coords.lng, coords.lat]);
-      initRef.current.addControl(directions, "top-right");
-      initRef.current.removeControl(directions);
       setMap(initRef.current);
     }
   }, [container, coords, setMap]);
@@ -56,7 +34,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
           type: "geojson",
           data: {
             type: "FeatureCollection",
-            //ts-expect-error - This is a valid check
+            //@ts-expect-error - This is a valid check
             features: features,
           },
         });
@@ -70,7 +48,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
           },
         });
         initRef.current!.on("click", "places", (e) => {
-          //ts-expect-error - This is a valid check
+          //@ts-expect-error - feature have an id property
           const { id } = e.features![0].properties;
           const find = interestPoints.find((point) => point.id === id);
           if (!find) return console.log("Interest point not found.");

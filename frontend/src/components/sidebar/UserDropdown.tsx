@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+import { useTheme } from "next-themes";
 import {
   Dropdown,
   DropdownTrigger,
@@ -7,9 +9,6 @@ import {
   User,
   Avatar,
 } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { ChangeEvent } from "react";
-import { PiPlus } from "react-icons/pi";
 
 const userImage = "https://i.pravatar.cc/150?u=a042581f4e29026024d";
 
@@ -61,6 +60,7 @@ export const UserDropdown = () => {
           <DropdownItem
             isReadOnly
             key="profile"
+            textValue="Profile"
             className="h-14 gap-2 opacity-100"
           >
             <User
@@ -76,20 +76,12 @@ export const UserDropdown = () => {
               }}
             />
           </DropdownItem>
-          <DropdownItem key="dashboard">Dashboard</DropdownItem>
-          <DropdownItem key="settings">Settings</DropdownItem>
-          <DropdownItem
-            key="new_project"
-            endContent={<PiPlus className="text-large" />}
-          >
-            New Project
+          <DropdownItem key="settings" textValue="settings">
+            Settings
           </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Preferences" showDivider>
-          <DropdownItem key="quick_search" shortcut="⌘K">
-            Quick search
-          </DropdownItem>
           <DropdownItem
             isReadOnly
             key="theme"
@@ -106,14 +98,17 @@ export const UserDropdown = () => {
                 <option>Light</option>
               </select>
             }
+            textValue="theme"
           >
             Theme
           </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Help & Feedback">
-          <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-          <DropdownItem key="logout" href="/login">
+          <DropdownItem key="help_and_feedback" textValue="help_and_feedback">
+            Help & Feedback
+          </DropdownItem>
+          <DropdownItem key="logout" textValue="logout" href="/login">
             LogOut
           </DropdownItem>
         </DropdownSection>

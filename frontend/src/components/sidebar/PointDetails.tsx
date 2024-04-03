@@ -6,8 +6,10 @@ export const PointDetails = () => {
     (state) => state,
   );
 
+  if (!point) return null;
+
   return (
-    <div className="relative">
+    <div className="relative p-2">
       <Image
         isBlurred
         src={point.img}
