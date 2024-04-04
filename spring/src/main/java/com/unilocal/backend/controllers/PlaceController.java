@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/places")
 public class PlaceController {
-  @Autowired
-  PlaceService placeService;
+  @Autowired PlaceService placeService;
 
   @GetMapping("/all")
   public ResponseEntity<List<Place>> getAllPlaces() {
