@@ -22,6 +22,7 @@ dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.security:spring-security-crypto:6.2.2'
 		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'com.cloudinary:cloudinary-http45:1.38.0'
 		implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
