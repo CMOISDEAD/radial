@@ -16,29 +16,35 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
+  // return a list of all users
   public List<User> getAll() {
     return userRepository.findAll();
   }
 
+  // save a new user
   public User save(RegisterUserDTO dto) {
     User user = new User(dto.name(), dto.username(), dto.password(),
         dto.email(), dto.image(), dto.city());
     return userRepository.save(user);
   }
 
+  // return a user by its username
   public Optional<User> findByUsername(String username) {
     return userRepository.findByUsername(username);
   }
 
+  // return a user by its id
   public Optional<User> findById(Id id) {
     return userRepository.findById(id);
   }
 
+  // delete a user by its id
   public void delete(Id id) {
     User user = userRepository.findById(id).orElseThrow();
     userRepository.delete(user);
   }
 
+  // update a user
   public User update(UpdateUserDTO user) {
     Optional<User> person = userRepository.findById(user.id());
     if (person.isEmpty())

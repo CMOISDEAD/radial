@@ -1,7 +1,6 @@
 package com.unilocal.backend.controllers;
 
 import com.unilocal.backend.dto.RegisterUserDTO;
-import com.unilocal.backend.dto.UpdateUserDTO;
 import com.unilocal.backend.models.User;
 import com.unilocal.backend.service.UserService;
 import java.util.Optional;
