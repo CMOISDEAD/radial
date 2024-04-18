@@ -1,3 +1,4 @@
 # TODOs
 
-- Add Service Implements
+- Add role
+- Implement Places logic

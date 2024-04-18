@@ -3,6 +3,7 @@ package com.unilocal.backend.service;
 import com.unilocal.backend.dto.RegisterUserDTO;
 import com.unilocal.backend.dto.UpdateUserDTO;
 import com.unilocal.backend.models.User;
+import com.unilocal.backend.models.UserRole;
 import com.unilocal.backend.repos.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class UserService {
    * @return new user created
    */
   public User save(RegisterUserDTO dto) {
-    User user = new User(dto.name(), dto.username(), dto.password(),
+    User user = new User(UserRole.USER, dto.name(), dto.username(), dto.password(),
         dto.email(), dto.image(), dto.city());
     return userRepository.save(user);
   }

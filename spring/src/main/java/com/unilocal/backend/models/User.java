@@ -18,7 +18,8 @@ public class User {
   @Id
   private String id;
 
-  private Role role;
+  @NonNull
+  private UserRole role;
   @NonNull
   private String name;
   @NonNull
@@ -33,19 +34,4 @@ public class User {
   @NonNull
   private String city;
   private Review[] reviews;
-}
-
-enum Role {
-  USER("User"),
-  ADMIN("Admin");
-
-  private final String value;
-
-  Role(String value) {
-    this.value = value;
-  }
-
-  public String getValue() {
-    return value;
-  }
 }
