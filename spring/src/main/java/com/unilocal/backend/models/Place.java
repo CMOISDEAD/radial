@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.unilocal.backend.models.Schedule;
 
 @Document
 @Getter
@@ -14,7 +15,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 @RequiredArgsConstructor
 public class Place {
-  @Id private String id;
+  @Id
+  private String id;
 
   private long lat;
   private long lon;
@@ -22,13 +24,20 @@ public class Place {
   private Category[] categories;
   private Review[] reviews;
 
-  @NonNull private String name;
-  @NonNull private String description;
-  @NonNull private String[] images;
-  @NonNull private String category;
-  @NonNull private String[] numbers;
-  @NonNull private Feature feature;
-  @NonNull private Schedule[] schedule;
+  @NonNull
+  private String name;
+  @NonNull
+  private String description;
+  @NonNull
+  private String[] images;
+  @NonNull
+  private String category;
+  @NonNull
+  private String[] numbers;
+  @NonNull
+  private Feature feature;
+  @NonNull
+  private Schedule[] schedule;
 }
 
 enum Category {
@@ -42,9 +51,13 @@ enum Category {
 
   private final String value;
 
-  Category(String value) { this.value = value; }
+  Category(String value) {
+    this.value = value;
+  }
 
-  public String getValue() { return value; }
+  public String getValue() {
+    return value;
+  }
 }
 
 enum Status {
@@ -54,7 +67,11 @@ enum Status {
 
   private final String value;
 
-  Status(String value) { this.value = value; }
+  Status(String value) {
+    this.value = value;
+  }
 
-  public String getValue() { return value; }
+  public String getValue() {
+    return value;
+  }
 }
