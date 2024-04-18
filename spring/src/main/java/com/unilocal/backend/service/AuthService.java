@@ -1,5 +1,6 @@
 package com.unilocal.backend.service;
 
+import com.unilocal.backend.dto.EmailDTO;
 import com.unilocal.backend.dto.LoginUserDTO;
 import com.unilocal.backend.dto.RegisterUserDTO;
 import com.unilocal.backend.dto.TokenDTO;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
   private final UserService userService;
   private final JWTUtils jwtUtils;
+  private final EmailService emailService;
 
   /**
    * Login in the system
@@ -40,8 +44,7 @@ public class AuthService {
     token.put("username", user.get().getUsername());
     token.put("id", user.get().getId().toString());
 
-    TokenDTO jwt =
-        new TokenDTO(jwtUtils.generateToken(user.get().getEmail(), token));
+    TokenDTO jwt = new TokenDTO(jwtUtils.generateToken(user.get().getEmail(), token));
 
     return jwt;
   }
@@ -55,10 +58,22 @@ public class AuthService {
   public User register(RegisterUserDTO request) {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String hashedPassword = encoder.encode(request.password());
-    request =
-        new RegisterUserDTO(request.name(), request.username(), request.email(),
-                            hashedPassword, request.image(), request.city());
+    request = new RegisterUserDTO(request.name(), request.username(), request.email(),
+        hashedPassword, request.image(), request.city());
     User user = userService.save(request);
     return user;
+  }
+
+  /**
+   * send an email with the token to recover the password
+   *
+   * @param usermail user email
+   * @throws Exception email error
+   */
+  public void recoverPassword(String usermail) throws Exception {
+    String token = "123456";
+    System.out.println(usermail);
+    EmailDTO email = new EmailDTO(usermail, "Recover Password", token);
+    emailService.sendEmail(email);
   }
 }

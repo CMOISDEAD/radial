@@ -10,13 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-  @Autowired UserService userService;
+  @Autowired
+  UserService userService;
 
   /**
    * get a list with all users
@@ -29,15 +31,15 @@ public class UserController {
   }
 
   /**
-   * get an user by id
+   * get an user by username
    *
    * @param username username of the user
    * @return user with the given username
    */
-  @GetMapping("/username/{id}")
-  public ResponseEntity<Optional<User>> byUsername(String username) {
-    return ResponseEntity.status(200).body(
-        userService.findByUsername(username));
+  @GetMapping("/username/{username}")
+  public ResponseEntity<Optional<User>> byUsername(@PathVariable("username") String username) {
+    Optional<User> user = userService.findByUsername(username);
+    return ResponseEntity.status(200).body(user);
   }
 
   /**
@@ -46,7 +48,7 @@ public class UserController {
    * @param user user with new properties
    * @return the updated user
    */
-  @GetMapping("/update/{id}")
+  @PutMapping("/update/{id}")
   public ResponseEntity<User> update(UpdateUserDTO user) {
     User updated = userService.update(user);
     return ResponseEntity.status(200).body(updated);
