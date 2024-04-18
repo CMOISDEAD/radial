@@ -18,22 +18,46 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   @Autowired UserService userService;
 
+  /**
+   * get a list with all users
+   *
+   * @return list with all users
+   */
   @GetMapping("/all")
   public ResponseEntity<List<User>> all() {
     return ResponseEntity.status(200).body(userService.getAll());
   }
 
+  /**
+   * get an user by id
+   *
+   * @param username username of the user
+   * @return user with the given username
+   */
   @GetMapping("/username/{id}")
   public ResponseEntity<Optional<User>> byUsername(String username) {
     return ResponseEntity.status(200).body(
         userService.findByUsername(username));
   }
 
+  /**
+   * update an user with the given user id
+   *
+   * @param user user with new properties
+   * @return the updated user
+   */
   @GetMapping("/update/{id}")
   public ResponseEntity<User> update(UpdateUserDTO user) {
-    return ResponseEntity.status(200).body(userService.update(user));
+    User updated = userService.update(user);
+    return ResponseEntity.status(200).body(updated);
   }
 
+  /**
+   * delete an user with the given id
+   *
+   * @param id id of the user to delete
+   * @return message with the result of the operation
+   */
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> delete(@PathVariable("id") String id) {
     userService.delete(id);

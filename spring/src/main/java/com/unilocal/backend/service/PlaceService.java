@@ -1,5 +1,6 @@
 package com.unilocal.backend.service;
 
+import com.unilocal.backend.dto.CreatePlaceDTO;
 import com.unilocal.backend.models.Place;
 import com.unilocal.backend.repos.PlaceRepository;
 import java.util.List;
@@ -19,7 +20,12 @@ public class PlaceService {
   public Place findById(Id id) { return placeRepository.findById(id); }
 
   // save a new place
-  public Place save(Place place) { return placeRepository.save(place); }
+  public Place save(CreatePlaceDTO dto) {
+    Place place =
+        new Place(dto.name(), dto.description(), dto.images(), dto.category(),
+                  dto.numbers(), dto.feature(), dto.schedule());
+    return placeRepository.save(place);
+  }
 
   // delete a place by its id
   public void delete(Id id) {

@@ -1,8 +1,8 @@
 package com.unilocal.backend.models;
 
-import java.time.LocalTime;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -12,31 +12,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Place {
-  @Id
-  private String id;
+  @Id private String id;
 
-  private String name;
-  private String description;
-  private String[] images;
   private long lat;
   private long lon;
-  private String category;
-  private Review[] reviews;
-  private Category[] categories;
-  private String[] numbers;
-  private Feature feature;
   private Status status;
-  private Schedule[] schedule;
-}
+  private Category[] categories;
+  private Review[] reviews;
 
-@Getter
-@Setter
-class Schedule {
-  private String day;
-  private LocalTime start_hour;
-  private LocalTime end_hour;
+  @NonNull private String name;
+  @NonNull private String description;
+  @NonNull private String[] images;
+  @NonNull private String category;
+  @NonNull private String[] numbers;
+  @NonNull private Feature feature;
+  @NonNull private Schedule[] schedule;
 }
 
 enum Category {
@@ -50,13 +42,9 @@ enum Category {
 
   private final String value;
 
-  Category(String value) {
-    this.value = value;
-  }
+  Category(String value) { this.value = value; }
 
-  public String getValue() {
-    return value;
-  }
+  public String getValue() { return value; }
 }
 
 enum Status {
@@ -66,11 +54,7 @@ enum Status {
 
   private final String value;
 
-  Status(String value) {
-    this.value = value;
-  }
+  Status(String value) { this.value = value; }
 
-  public String getValue() {
-    return value;
-  }
+  public String getValue() { return value; }
 }

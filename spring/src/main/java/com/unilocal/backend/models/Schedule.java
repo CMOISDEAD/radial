@@ -1,5 +1,6 @@
 package com.unilocal.backend.models;
 
+import java.time.LocalTime;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Review {
+public class Schedule {
   @Id private String id;
 
-  @NonNull private String text;
-  @NonNull private int stars;
-  @NonNull private User user;
-  @NonNull private Place place;
+  @NonNull private String day;
+  @NonNull private LocalTime start_hour;
+  @NonNull private LocalTime end_hour;
 }
