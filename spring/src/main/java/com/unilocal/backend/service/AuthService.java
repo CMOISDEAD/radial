@@ -6,12 +6,15 @@ import com.unilocal.backend.dto.RegisterUserDTO;
 import com.unilocal.backend.dto.TokenDTO;
 import com.unilocal.backend.models.User;
 import com.unilocal.backend.utils.JWTUtils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,15 +68,37 @@ public class AuthService {
   }
 
   /**
-   * send an email with the token to recover the password
+   * generate a token and link for recover password
    *
-   * @param usermail user email
+   * @param email user email
    * @throws Exception email error
    */
-  public void recoverPassword(String usermail) throws Exception {
-    String token = "123456";
-    System.out.println(usermail);
-    EmailDTO email = new EmailDTO(usermail, "Recover Password", token);
-    emailService.sendEmail(email);
+  public void generateLink(String email) throws Exception {
+    User user = userService.findByEmail(email).orElseThrow();
+    if (user == null)
+      throw new Exception("User not found");
+    Map<String, Object> map = new HashMap<>();
+    map.put("id", user.getId());
+    map.put("email", user.getEmail());
+    TokenDTO token = new TokenDTO(jwtUtils.generateToken(user.getEmail(), map));
+    String url = "http://localhost:8080/auth/recover/" + token.token().toString();
+    System.out.println(url);
+    // TODO: send an html button with the token on http request body
+    EmailDTO message = new EmailDTO(email, "Recover Password, Link", url);
+    emailService.sendEmail(message);
+  }
+
+  /**
+   * updates the user password
+   *
+   * @param token    jwt token with user credentials
+   * @param password new password
+   * @return user with updated password
+   */
+  public User recoverPassword(String token, String password) {
+    Jws<Claims> jwt = jwtUtils.parseJwt(token);
+    Claims payload = jwt.getPayload();
+    User user = userService.updatePassword(payload.get("id").toString(), password);
+    return user;
   }
 }

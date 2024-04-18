@@ -1,5 +1,6 @@
 package com.unilocal.backend.controllers;
 
+import com.unilocal.backend.dto.GeneratePasswordDTO;
 import com.unilocal.backend.dto.LoginUserDTO;
 import com.unilocal.backend.dto.RecoverPasswordDTO;
 import com.unilocal.backend.dto.RegisterUserDTO;
@@ -52,9 +53,17 @@ public class AuthController {
   }
 
   // recover password
-  @PostMapping("/recover")
-  public ResponseEntity<String> recover(@RequestBody RecoverPasswordDTO dto) throws Exception {
-    authService.recoverPassword(dto.email());
+  @PostMapping("/generate")
+  public ResponseEntity<String> generate(@RequestBody GeneratePasswordDTO dto) throws Exception {
+    authService.generateLink(dto.email());
     return ResponseEntity.status(200).body("email sent to " + dto.email());
+  }
+
+  @PostMapping("/recover")
+  public ResponseEntity<User> recover(@RequestBody() RecoverPasswordDTO dto) {
+    String token = dto.token().toString();
+    String password = dto.password();
+    User user = authService.recoverPassword(token, password);
+    return ResponseEntity.status(200).body(user);
   }
 }
