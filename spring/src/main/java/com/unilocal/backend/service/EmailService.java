@@ -3,11 +3,13 @@ package com.unilocal.backend.service;
 import com.unilocal.backend.dto.EmailDTO;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
+@EnableAutoConfiguration
 @RequiredArgsConstructor
 public class EmailService {
   private final JavaMailSender mailSender;

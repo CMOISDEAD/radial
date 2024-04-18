@@ -13,18 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-  @Autowired
-  UserRepository userRepository;
+  @Autowired UserRepository userRepository;
 
   // return a list of all users
-  public List<User> getAll() {
-    return userRepository.findAll();
-  }
+  public List<User> getAll() { return userRepository.findAll(); }
 
   // save a new user
   public User save(RegisterUserDTO dto) {
     User user = new User(dto.name(), dto.username(), dto.password(),
-        dto.email(), dto.image(), dto.city());
+                         dto.email(), dto.image(), dto.city());
     return userRepository.save(user);
   }
 
@@ -34,12 +31,12 @@ public class UserService {
   }
 
   // return a user by its id
-  public Optional<User> findById(Id id) {
+  public Optional<User> findById(String id) {
     return userRepository.findById(id);
   }
 
   // delete a user by its id
-  public void delete(Id id) {
+  public void delete(String id) {
     User user = userRepository.findById(id).orElseThrow();
     userRepository.delete(user);
   }

@@ -30,8 +30,8 @@ public class JWTUtils {
   }
 
   private SecretKey getKey() {
-    String claveSecreta = "secretsecretsecretsecretsecretsecretsecretsecret";
-    byte[] secretKeyBytes = claveSecreta.getBytes();
-    return Keys.hmacShaKeyFor(secretKeyBytes);
+    String secret = "secretsecretsecretsecretsecretsecretsecretsecret";
+    byte[] bytes = secret.getBytes();
+    return Keys.hmacShaKeyFor(bytes);
   }
 }

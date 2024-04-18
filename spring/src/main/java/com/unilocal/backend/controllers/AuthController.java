@@ -47,10 +47,10 @@ public class AuthController {
     token.put("username", user.get().getUsername());
     token.put("id", user.get().getId().toString());
 
-    TokenDTO response =
+    TokenDTO jwt =
         new TokenDTO(jwtUtils.generateToken(user.get().getEmail(), token));
 
-    return ResponseEntity.status(200).body(response);
+    return ResponseEntity.status(200).body(jwt);
   }
 
   /**
@@ -60,7 +60,7 @@ public class AuthController {
    * @return http response with the user created and HTTP status
    */
   @PostMapping("/register")
-  public ResponseEntity<User> login(@RequestBody() RegisterUserDTO user) {
+  public ResponseEntity<User> register(@RequestBody() RegisterUserDTO user) {
     Optional<User> existingUser = userService.findByUsername(user.username());
     if (existingUser.isPresent()) {
       return ResponseEntity.status(409).build();
