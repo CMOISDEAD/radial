@@ -23,7 +23,7 @@ public class Schedule {
   @NonNull
   private String day;
   @NonNull
-  private LocalTime start_hour;
+  private String start_hour;
   @NonNull
-  private LocalTime end_hour;
+  private String end_hour;
 }

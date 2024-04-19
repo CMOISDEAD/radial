@@ -11,13 +11,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReviewService {
 
-  @Autowired ReviewRepository reviewRepository;
+  @Autowired
+  ReviewRepository reviewRepository;
 
-  public List<Review> getAll() { return reviewRepository.findAll(); }
+  public List<Review> getAll() {
+    return reviewRepository.findAll();
+  }
 
   public Review save(CreateReviewDTO dto) {
-    Review review =
-        new Review(dto.text(), dto.stars(), dto.user(), dto.place());
+    Review review = new Review(dto.text(), dto.stars(), dto.user(), dto.place());
     return reviewRepository.save(review);
   }
 

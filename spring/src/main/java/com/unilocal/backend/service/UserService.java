@@ -1,20 +1,25 @@
 package com.unilocal.backend.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.unilocal.backend.dto.RegisterUserDTO;
 import com.unilocal.backend.dto.UpdateUserDTO;
+import com.unilocal.backend.models.Place;
 import com.unilocal.backend.models.User;
 import com.unilocal.backend.models.UserRole;
 import com.unilocal.backend.repos.UserRepository;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
   @Autowired
   UserRepository userRepository;
+  @Autowired
+  PlaceService placeService;
 
   /**
    * get all user in the system
@@ -115,5 +120,12 @@ public class UserService {
     userRepository.save(updatedUser);
     return updatedUser;
 
+  }
+
+  public List<Place> getPlaces(String id) {
+    Optional<User> user = userRepository.findById(id);
+    if (user.isEmpty())
+      throw new RuntimeException("User not found");
+    return placeService.findByUser_id(id);
   }
 }

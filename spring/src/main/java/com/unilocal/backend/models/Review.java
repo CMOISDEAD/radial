@@ -14,10 +14,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 @RequiredArgsConstructor
 public class Review {
-  @Id private String id;
+  @Id
+  private String id;
 
-  @NonNull private String text;
-  @NonNull private int stars;
-  @NonNull private User user;
-  @NonNull private Place place;
+  @NonNull
+  private String text;
+  @NonNull
+  private int stars;
+  @NonNull
+  private User user;
+  @NonNull
+  private Place place;
 }

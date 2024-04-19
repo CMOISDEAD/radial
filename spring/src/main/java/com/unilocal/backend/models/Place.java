@@ -1,13 +1,17 @@
 package com.unilocal.backend.models;
 
+import java.util.Locale.Category;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.unilocal.backend.models.enums.PlaceStatus;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import com.unilocal.backend.models.Schedule;
 
 @Document
 @Getter
@@ -17,12 +21,6 @@ import com.unilocal.backend.models.Schedule;
 public class Place {
   @Id
   private String id;
-
-  private long lat;
-  private long lon;
-  private Status status;
-  private Category[] categories;
-  private Review[] reviews;
 
   @NonNull
   private String name;
@@ -38,40 +36,12 @@ public class Place {
   private Feature feature;
   @NonNull
   private Schedule[] schedule;
-}
+  @NonNull
+  private String userId;
 
-enum Category {
-  SUPERMARKET("Supermarket"),
-  RESTAURANT("Restaurant"),
-  BAR("Bar"),
-  CAFE("Cafe"),
-  CLUB("Club"),
-  SHOP("Shop"),
-  OTHER("Other");
-
-  private final String value;
-
-  Category(String value) {
-    this.value = value;
-  }
-
-  public String getValue() {
-    return value;
-  }
-}
-
-enum Status {
-  APROVED("Aproved"),
-  PENDING("Pending"),
-  REJECTED("Rejected");
-
-  private final String value;
-
-  Status(String value) {
-    this.value = value;
-  }
-
-  public String getValue() {
-    return value;
-  }
+  private long lat;
+  private long lon;
+  private PlaceStatus status;
+  private Category[] categories;
+  private Review[] reviews;
 }

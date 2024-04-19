@@ -1,18 +1,22 @@
 package com.unilocal.backend.controllers;
 
-import com.unilocal.backend.dto.UpdateUserDTO;
-import com.unilocal.backend.models.User;
-import com.unilocal.backend.service.UserService;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.unilocal.backend.dto.UpdateUserDTO;
+import com.unilocal.backend.models.Place;
+import com.unilocal.backend.models.User;
+import com.unilocal.backend.service.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -49,7 +53,7 @@ public class UserController {
    * @return the updated user
    */
   @PutMapping("/update/{id}")
-  public ResponseEntity<User> update(UpdateUserDTO user) {
+  public ResponseEntity<User> update(@RequestBody UpdateUserDTO user) {
     User updated = userService.update(user);
     return ResponseEntity.status(200).body(updated);
   }
@@ -64,5 +68,11 @@ public class UserController {
   public ResponseEntity<String> delete(@PathVariable("id") String id) {
     userService.delete(id);
     return ResponseEntity.status(200).body("User deleted successfully!");
+  }
+
+  @GetMapping("/places/{id}")
+  public ResponseEntity<List<Place>> getPlaces(@PathVariable("id") String id) {
+    List<Place> places = userService.getPlaces(id);
+    return ResponseEntity.status(200).body(places);
   }
 }
