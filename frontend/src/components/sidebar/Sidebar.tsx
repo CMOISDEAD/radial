@@ -6,7 +6,9 @@ import { Finder } from "./Finder";
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
-  const toggle = () => setOpen((prev) => !prev);
+  const toggle = () => {
+    setOpen((prev) => !prev);
+  };
 
   const sidebarMotion = {
     initial: { x: "-100%" },
@@ -16,7 +18,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="h-full flex absolute left-0 z-40">
+    <div className="h-full flex absolute left-0 top-0 z-40">
       <ActionBar toggle={toggle} />
       <AnimatePresence mode="wait" initial={false}>
         {open && (

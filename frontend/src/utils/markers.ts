@@ -1,6 +1,5 @@
 import { Map, Marker, Popup } from "mapbox-gl";
 
-// generate a new marker on the map in the given coordinates
 export const generateNewMarker = ({
   lat,
   lng,
@@ -13,7 +12,9 @@ export const generateNewMarker = ({
   const popup = new Popup({
     closeButton: false,
     anchor: "left",
-  }).setHTML(`<div class="popup text-black">you are here: <br/>[${lng},  ${lat}]</div>`);
+  }).setHTML(
+    `<div class="popup text-black">you are here: <br/>[${lng},  ${lat}]</div>`,
+  );
   new Marker({ color: "#FF5733", scale: 1.5 })
     .setLngLat([lng, lat])
     .setPopup(popup)

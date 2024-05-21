@@ -25,8 +25,9 @@ export const UserDropdown = () => {
       showArrow
       radius="sm"
       classNames={{
-        base: "before:bg-default-200", // change arrow background
-        content: "p-0 border-small border-divider bg-background",
+        base: "before:bg-background/70", // change arrow background
+        content:
+          "p-0 border-small border-divider bg-background/70 backdrop-blur-sm",
       }}
     >
       <DropdownTrigger>
@@ -38,30 +39,14 @@ export const UserDropdown = () => {
           className="cursor-pointer"
         />
       </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Custom item styles"
-        disabledKeys={["profile"]}
-        className="p-3"
-        itemClasses={{
-          base: [
-            "rounded-md",
-            "text-default-500",
-            "transition-opacity",
-            "data-[hover=true]:text-foreground",
-            "data-[hover=true]:bg-default-100",
-            "dark:data-[hover=true]:bg-default-50",
-            "data-[selectable=true]:focus:bg-default-50",
-            "data-[pressed=true]:opacity-70",
-            "data-[focus-visible=true]:ring-default-500",
-          ],
-        }}
-      >
+      <DropdownMenu className="p-3">
         <DropdownSection aria-label="Profile & Actions" showDivider>
           <DropdownItem
-            isReadOnly
             key="profile"
             textValue="Profile"
-            className="h-14 gap-2 opacity-100"
+            href="/user/user"
+            variant="flat"
+            color="primary"
           >
             <User
               name="Junior Garcia"
@@ -76,7 +61,7 @@ export const UserDropdown = () => {
               }}
             />
           </DropdownItem>
-          <DropdownItem key="settings" textValue="settings">
+          <DropdownItem key="settings" textValue="settings" variant="flat">
             Settings
           </DropdownItem>
         </DropdownSection>
@@ -84,6 +69,7 @@ export const UserDropdown = () => {
         <DropdownSection aria-label="Preferences" showDivider>
           <DropdownItem
             isReadOnly
+            variant="flat"
             key="theme"
             className="cursor-default"
             endContent={
@@ -105,10 +91,20 @@ export const UserDropdown = () => {
         </DropdownSection>
 
         <DropdownSection aria-label="Help & Feedback">
-          <DropdownItem key="help_and_feedback" textValue="help_and_feedback">
+          <DropdownItem
+            key="help_and_feedback"
+            textValue="help_and_feedback"
+            variant="flat"
+          >
             Help & Feedback
           </DropdownItem>
-          <DropdownItem key="logout" textValue="logout" href="/login">
+          <DropdownItem
+            key="logout"
+            textValue="logout"
+            href="/login"
+            variant="flat"
+            color="danger"
+          >
             LogOut
           </DropdownItem>
         </DropdownSection>

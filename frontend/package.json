@@ -13,6 +13,7 @@
     "@mapbox/mapbox-gl-directions": "^4.2.0",
     "@nextui-org/react": "^2.2.9",
     "@types/mapbox-gl": "^2.7.20",
+    "axios": "^1.6.8",
     "framer-motion": "^11.0.3",
     "mapbox-gl": "^3.1.2",
     "next-themes": "^0.2.1",

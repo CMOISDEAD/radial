@@ -12,7 +12,8 @@ export const initMap = (
     style: "mapbox://styles/mapbox/dark-v10",
     pitchWithRotate: false,
     center: [coords.lng, coords.lat],
-    zoom: 15,
+    zoom: 16,
+    pitch: 55,
     accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
     doubleClickZoom: false,
   });

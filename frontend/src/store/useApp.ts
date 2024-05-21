@@ -2,15 +2,17 @@ import { Map } from "mapbox-gl";
 import { create } from "zustand";
 
 interface StoreState {
-  selectedPoint: null | Point;
-  setSelectedPoint: (point: null | Point) => void;
-  map: null | Map;
-  setMap: (map: null | Map) => void;
+  map: Map | null;
+  user: IUser | null;
+  selectedPoint: Point | null;
+  setMap: (map: Map | null) => void;
+  setSelectedPoint: (point: Point | null) => void;
 }
 
 export const useAppStore = create<StoreState>()((set) => ({
-  selectedPoint: null,
   map: null,
+  user: null,
+  selectedPoint: null,
   setSelectedPoint: (point) => set({ selectedPoint: point }),
   setMap: (map) => set({ map }),
 }));

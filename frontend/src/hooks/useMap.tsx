@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { initMap } from "../utils/mapinit";
 import { Map } from "mapbox-gl";
-import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+// import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import { generateNewMarker } from "../utils/markers";
 import { useAppStore } from "../store/useApp";
 import { interestPoints, features } from "../utils/data";
 
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+import { generateUserMarker } from "../components/map/UserMark";
 
 export const useMap = (container: React.RefObject<HTMLDivElement>) => {
-  const [coords, setCoords] = useState({
+  const [coords, _setCoords] = useState({
     lat: 4.556260250318374,
     lng: -75.65964791577778,
   });
@@ -26,7 +27,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   useEffect(() => {
     initRef.current &&
       initRef.current.on("load", () => {
-        generateNewMarker({
+        generateUserMarker({
           map: initRef.current!,
           ...initRef.current!.getCenter(),
         });
@@ -56,7 +57,7 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
           initRef.current!.flyTo({
             //@ts-expect-error - This is a valid check
             center: e.features![0].geometry.coordinates as [number, number],
-            zoom: 15,
+            zoom: 16,
             essential: true,
           });
         });

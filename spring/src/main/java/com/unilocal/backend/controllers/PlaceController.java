@@ -42,7 +42,7 @@ public class PlaceController {
    * @throws Exception
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Place> getPlaceById(@RequestParam("id") String id) throws Exception {
+  public ResponseEntity<Place> getPlaceById(@PathVariable("id") String id) throws Exception {
     Place place = placeService.findById(id);
     return ResponseEntity.status(200).body(place);
   }
