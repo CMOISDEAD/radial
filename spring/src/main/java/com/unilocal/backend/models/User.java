@@ -30,8 +30,9 @@ public class User {
   private String password;
   private String image;
   @NonNull
-  private String country;
-  @NonNull
   private String city;
+  @NonNull
+  private String country;
+
   private Review[] reviews;
 }

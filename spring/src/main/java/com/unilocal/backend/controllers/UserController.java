@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.unilocal.backend.dto.UpdateUserDTO;
 import com.unilocal.backend.models.Place;
@@ -20,6 +21,7 @@ import com.unilocal.backend.service.UserService;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
   @Autowired
   UserService userService;
@@ -32,6 +34,12 @@ public class UserController {
   @GetMapping("/all")
   public ResponseEntity<List<User>> all() {
     return ResponseEntity.status(200).body(userService.getAll());
+  }
+
+  @GetMapping("/user/{id}")
+  public ResponseEntity<Optional<User>> byId(@PathVariable("id") String id) {
+    Optional<User> user = userService.findById(id);
+    return ResponseEntity.status(200).body(user);
   }
 
   /**

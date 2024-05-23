@@ -37,8 +37,8 @@ public class UserService {
    * @return new user created
    */
   public User save(RegisterUserDTO dto) {
-    User user = new User(UserRole.USER, dto.name(), dto.username(), dto.password(),
-        dto.email(), dto.image(), dto.city());
+    User user = new User(UserRole.USER, dto.name(), dto.username(),
+        dto.email(), dto.password(), dto.city(), dto.country());
     return userRepository.save(user);
   }
 

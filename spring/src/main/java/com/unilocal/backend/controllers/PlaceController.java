@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.unilocal.backend.dto.CreatePlaceDTO;
 import com.unilocal.backend.models.Place;
 import com.unilocal.backend.service.PlaceService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/places")
 public class PlaceController {

@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
   @Autowired
   AuthService authService;
@@ -45,6 +47,7 @@ public class AuthController {
    */
   @PostMapping("/register")
   public ResponseEntity<User> register(@RequestBody() RegisterUserDTO request) {
+  System.out.println(request);
     Optional<User> existing = userService.findByUsername(request.username());
     if (existing.isPresent())
       return ResponseEntity.status(409).build();

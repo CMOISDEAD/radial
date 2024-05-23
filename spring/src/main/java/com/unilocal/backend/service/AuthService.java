@@ -61,8 +61,8 @@ public class AuthService {
   public User register(RegisterUserDTO request) {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String hashedPassword = encoder.encode(request.password());
-    request = new RegisterUserDTO(request.name(), request.username(), request.email(),
-        hashedPassword, request.image(), request.city());
+    request = new RegisterUserDTO(request.name(), request.username(),
+        hashedPassword, request.email(), request.image(), request.city(), request.country());
     User user = userService.save(request);
     return user;
   }
