@@ -4,7 +4,12 @@ import { Comment } from "./Comment";
 export const CommentSection = () => {
   return (
     <div className="flex flex-col gap-2 mt-4">
-      <Textarea label="Comment" placeholder="Leave a comment..." />
+      <Textarea
+        label="Comment"
+        placeholder="Leave a comment..."
+        size="sm"
+        variant="flat"
+      />
       {[1, 2, 3].map((i) => (
         <Comment key={i} />
       ))}

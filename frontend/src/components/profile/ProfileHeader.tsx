@@ -1,6 +1,6 @@
 import { Image, Tooltip } from "@nextui-org/react";
 
-export const ProfileHeader = () => {
+export const ProfileHeader = ({ user }: any) => {
   return (
     <header>
       <div className="flex gap-8 content-start items-center justify-start">

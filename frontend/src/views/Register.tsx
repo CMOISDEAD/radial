@@ -8,8 +8,8 @@ import {
 } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { notify } from "../utils/notifications";
+import { instance } from "../api/instance";
 
 type Inputs = {
   name: string;
@@ -29,12 +29,22 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    notify({
-      msg: "Register",
-      type: "success",
-    });
-    navigate("/login");
+    instance
+      .post("/auth/register", data)
+      .then((_res) => {
+        notify({
+          msg: "User created",
+          type: "success",
+        });
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify({
+          msg: "Something went wrong!, please try again.",
+          type: "error",
+        });
+      });
   };
 
   return (

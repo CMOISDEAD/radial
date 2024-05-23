@@ -6,8 +6,9 @@ import {
   Avatar,
 } from "@nextui-org/react";
 import { useAppStore } from "../../store/useApp";
-import { RxCalendar, RxCross1, RxDotsVertical, RxHeart } from "react-icons/rx";
+import { RxCalendar, RxCross1, RxHeart } from "react-icons/rx";
 import { CommentSection } from "./CommentSection";
+import { Options } from "./admin/Options";
 
 export const PointDetails = () => {
   const { selectedPoint: point, setSelectedPoint } = useAppStore(
@@ -24,9 +25,7 @@ export const PointDetails = () => {
         size="sm"
         className="absolute top-2 right-0 z-20"
       >
-        <Button>
-          <RxDotsVertical />
-        </Button>
+        <Options />
         <Button>
           <RxHeart className="text-success" />
         </Button>

@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { notify } from "../utils/notifications";
 import { Social } from "../components/auth/Social";
+import { instance } from "../api/instance";
 
 type Inputs = {
   username: string;
@@ -26,12 +27,23 @@ export const Login = () => {
 
   const handleLogIn: SubmitHandler<Inputs> = (data) => {
     const { username, password } = data;
-    console.log({ username, password });
-    notify({
-      msg: "Logged In",
-      type: "success",
-    });
-    navigate("/");
+    instance
+      .post("/auth/login", { username, password })
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        notify({
+          msg: "Logged In",
+          type: "success",
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        notify({
+          msg: "Something went wrong!, please try again.",
+          type: "error",
+        });
+      });
   };
 
   return (
