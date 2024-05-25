@@ -1,4 +1,4 @@
-import { MapViewer } from "../components/MapViewer";
+import { MapViewer } from "../components/map/MapViewer";
 
 export const Home = () => {
   return <MapViewer />;

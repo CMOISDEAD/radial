@@ -28,8 +28,13 @@ interface StoreState {
   token: string | null;
   points: any[] | null;
   selectedPoint: Point | null;
+  trigger: null | any;
+  directionInfo: null | any;
+  vehicle: string;
   setUser: (user: any) => void;
   setToken: (token: string | null) => void;
+  setVehicle: (vehicle: string) => void;
+  setDirectionInfo: (directionInfo: any | null) => void;
   setPoints: (points: any[]) => void;
   setSelectedPoint: (point: Point | null) => void;
 }
@@ -41,9 +46,14 @@ export const useAppStore = create<StoreState>()(
       token: null,
       user: null,
       selectedPoint: null,
+      trigger: null,
+      directionInfo: null,
+      vehicle: "walk",
       setPoints: (points) => set({ points }),
       setToken: (token) => set({ token }),
+      setVehicle: (vehicle) => set({ vehicle }),
       setUser: (user) => set({ user }),
+      setDirectionInfo: (directionInfo) => set({ directionInfo }),
       setSelectedPoint: (point) => set({ selectedPoint: point }),
     }),
     {

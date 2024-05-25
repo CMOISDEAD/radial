@@ -3,13 +3,13 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-import { Root } from "./layout/Root";
-import { Register } from "../views/Register";
-import { Login } from "../views/Login";
-import { User } from "../views/User";
-import { Home } from "../views/Home";
-import { ProtectedRoute } from "./layout/ProtectedRoute";
-import { Recover } from "../views/Recover";
+import { Root } from "./Root";
+import { Register } from "../../views/Register";
+import { Login } from "../../views/Login";
+import { User } from "../../views/User";
+import { Home } from "../../views/Home";
+import { Recover } from "../../views/Recover";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export const Providers = () => {
   const navigate = useNavigate();

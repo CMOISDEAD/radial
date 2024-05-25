@@ -4,24 +4,31 @@ import { Map } from "mapbox-gl";
 import { generateNewMarker } from "../utils/markers";
 import { useAppStore, useMapStore } from "../store/useApp";
 import { generateUserMarker } from "../components/map/UserMark";
+import { notify } from "../utils/notifications";
+import * as clipboard from "clipboard-polyfill";
 import axios from "axios";
 
 export const useMap = (container: React.RefObject<HTMLDivElement>) => {
   const [coords, _setCoords] = useState({
-    lat: 4.556260250318374,
-    lng: -75.65964791577778,
+    lat: 4.53308251346715,
+    lng: -75.67391435147672,
   });
   const initRef = useRef<Map | null>(null);
   const { setMap, setDirections } = useMapStore((state) => state);
-  const { points, setSelectedPoint } = useAppStore((state) => state);
+  const { points, vehicle, setSelectedPoint, setDirectionInfo } = useAppStore(
+    (state) => state
+  );
 
   const calculateDirections = async (lng: number, lat: number) => {
     const res = await axios.get(
-      `https://api.mapbox.com/directions/v5/mapbox/cycling/${-75.65964791577778},${4.556260250318374};${lng},${lat}?geometries=geojson&access_token=${
+      `https://api.mapbox.com/directions/v5/mapbox/cycling/${coords.lng},${
+        coords.lat
+      };${lng},${lat}?geometries=geojson&access_token=${
         import.meta.env.VITE_MAPBOX_TOKEN
       }`
     );
     const data = res.data.routes[0];
+    setDirectionInfo(data);
     const route = data.geometry.coordinates;
     const geojson = {
       type: "Feature",
@@ -125,8 +132,17 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
         calculateDirections(lngLat.lng, lngLat.lat);
       });
 
+    initRef.current &&
+      initRef.current.on("dblclick", ({ lngLat }) => {
+        notify({
+          msg: "Copied latitude and longitude",
+          type: "success",
+        });
+        clipboard.writeText(`${lngLat.lng},${lngLat.lat}`);
+      });
+
     return () => {
       initRef.current?.off("load", generateNewMarker);
     };
-  }, [coords, setSelectedPoint]);
+  }, [coords, setSelectedPoint, points]);
 };

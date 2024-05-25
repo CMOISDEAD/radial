@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { instance } from "../../../api/instance";
 import { useAppStore } from "../../../store/useApp";
 import { notify } from "../../../utils/notifications";
+import { upload } from "../../../utils/upload";
 
 interface Inputs {
   name: string;
@@ -18,8 +19,8 @@ interface Inputs {
   numbers: string[];
   open: string;
   close: string;
-  lat: number;
-  lon: number;
+  lngLat: string;
+  image: any;
 }
 
 export const AddForm = () => {
@@ -31,11 +32,13 @@ export const AddForm = () => {
   } = useForm<Inputs>();
   const { user, setPoints } = useAppStore((state) => state);
 
-  const mapData = (data: any) => {
+  const mapData = async (data: Inputs) => {
+    const [lng, lat] = data.lngLat.split(",");
+    const image = await upload(data.image[0]);
     return {
       ...data,
       userId: user?.id,
-      images: [data.images],
+      images: [image.url],
       numbers: [data.numbers],
       schedule: [
         {
@@ -52,14 +55,15 @@ export const AddForm = () => {
         },
         geometry: {
           type: "Point",
-          coordinates: [data.lon, data.lat],
+          coordinates: [lng, lat],
         },
       },
     };
   };
 
-  const onSubmit = (data: Inputs) => {
-    const request = mapData(data);
+  const onSubmit = async (data: Inputs) => {
+    const request = await mapData(data);
+    delete request.image;
     instance
       .post("/places/add", { ...request })
       .then((res) => {
@@ -94,12 +98,7 @@ export const AddForm = () => {
             placeholder="A restaurant with a good food ?"
             {...register("description", { required: true })}
           />
-          <Input
-            isRequired
-            label="Images"
-            placeholder="Images"
-            {...register("images", { required: true })}
-          />
+          <input type="file" {...register("image", { required: true })} />
           <Select
             fullWidth
             label="Category"
@@ -126,15 +125,9 @@ export const AddForm = () => {
           <div className="flex gap-2 content-center items-center justify-center">
             <Input
               isRequired
-              label="Lat"
-              placeholder="Latitude"
-              {...register("lat", { required: true })}
-            />
-            <Input
-              isRequired
-              label="Long"
-              placeholder="Longitude"
-              {...register("lon", { required: true })}
+              label="Longitude & Latitude"
+              placeholder="Longitude & Latitude"
+              {...register("lngLat", { required: true })}
             />
           </div>
           <div className="flex gap-2 content-center items-center">

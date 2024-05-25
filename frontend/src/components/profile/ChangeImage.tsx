@@ -10,6 +10,7 @@ import { notify } from "../../utils/notifications";
 import axios from "axios";
 import { instance } from "../../api/instance";
 import { useAppStore } from "../../store/useApp";
+import { upload } from "../../utils/upload";
 
 export const ChangeImage = ({ isOpen, onOpenChange, id }: any) => {
   const { user, setUser } = useAppStore((state) => state);
@@ -17,14 +18,7 @@ export const ChangeImage = ({ isOpen, onOpenChange, id }: any) => {
   const updatePhoto = async ({ id, photo }: any) => {
     const image = photo;
     try {
-      const content = new FormData();
-      content.append("file", image);
-      content.append("upload_preset", "library");
-      content.append("cloud_name", "djfou58lo");
-      const { data } = await axios.post(
-        "https://api.cloudinary.com/v1_1/djfou58lo/image/upload",
-        content
-      );
+      const data = await upload(image);
       const response = await instance.put(`/users/update/${id}`, {
         ...user,
         image: data.url,
