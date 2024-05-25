@@ -10,6 +10,7 @@ import { instance } from "../../../api/instance";
 import { useAppStore } from "../../../store/useApp";
 import { notify } from "../../../utils/notifications";
 import { upload } from "../../../utils/upload";
+import categories from "../../../utils/categories";
 
 interface Inputs {
   name: string;
@@ -106,13 +107,11 @@ export const AddForm = () => {
             placeholder="Select a category"
             onChange={({ target }) => setValue("category", target.value)}
           >
-            {["restaurant", "museum", "hotel", "cine", "library"].map(
-              (point) => (
-                <SelectItem key={point} value={point}>
-                  {point[0].toUpperCase() + point.slice(1)}
-                </SelectItem>
-              )
-            )}
+            {categories.map((point) => (
+              <SelectItem key={point} value={point}>
+                {point[0].toUpperCase() + point.slice(1)}
+              </SelectItem>
+            ))}
           </Select>
         </div>
         <div className="flex flex-col gap-2 w-full">

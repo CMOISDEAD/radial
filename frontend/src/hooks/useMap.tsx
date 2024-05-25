@@ -144,5 +144,5 @@ export const useMap = (container: React.RefObject<HTMLDivElement>) => {
     return () => {
       initRef.current?.off("load", generateNewMarker);
     };
-  }, [coords, setSelectedPoint, points]);
+  }, [coords, setSelectedPoint]);
 };
