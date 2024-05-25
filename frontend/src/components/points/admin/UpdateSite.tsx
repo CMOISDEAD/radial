@@ -5,11 +5,13 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  ButtonGroup,
 } from "@nextui-org/react";
-import { RxPencil1, RxTrash } from "react-icons/rx";
+import { UpdateForm } from "./UpdateForm";
+import { useAppStore } from "../../../store/useApp";
 
 export const UpdateSite = ({ isOpen, onOpenChange }: any) => {
+  const { selectedPoint } = useAppStore((store) => store);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -24,29 +26,17 @@ export const UpdateSite = ({ isOpen, onOpenChange }: any) => {
               Update Site
             </ModalHeader>
             <ModalBody>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                pulvinar risus non risus hendrerit venenatis. Pellentesque sit
-                amet hendrerit risus, sed porttitor quam.
-              </p>
+              <UpdateForm values={selectedPoint} />
             </ModalBody>
-            <ModalFooter>
-              <ButtonGroup variant="flat" fullWidth>
-                <Button
-                  color="danger"
-                  onPress={onClose}
-                  startContent={<RxTrash />}
-                >
-                  Close
-                </Button>
-                <Button
-                  color="success"
-                  onPress={onClose}
-                  startContent={<RxPencil1 />}
-                >
-                  Update
-                </Button>
-              </ButtonGroup>
+            <ModalFooter className="w-full flex content-center items-center justify-center">
+              <Button
+                fullWidth
+                color="danger"
+                onPress={onClose}
+                className="w-full"
+              >
+                Close
+              </Button>
             </ModalFooter>
           </>
         )}

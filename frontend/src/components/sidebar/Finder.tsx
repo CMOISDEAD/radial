@@ -6,45 +6,70 @@ import {
   CardFooter,
   Autocomplete,
   AutocompleteItem,
+  AutocompleteSection,
 } from "@nextui-org/react";
 import { PointCard } from "../points/PointCard";
 import { PointDetails } from "../points/PointDetails";
-import { interestPoints as data } from "../../utils/data";
-import { useAppStore } from "../../store/useApp";
+import { useAppStore, useMapStore } from "../../store/useApp";
+import { groupBy } from "../../utils/groupBy";
+import { useEffect } from "react";
+import { instance } from "../../api/instance";
 
 export const Finder = () => {
-  const { map, selectedPoint, setSelectedPoint } = useAppStore(
-    (state) => state,
+  const { points, setPoints, selectedPoint, setSelectedPoint } = useAppStore(
+    (state) => state
   );
+  const { map, directions } = useMapStore((state) => state);
 
   const onSelectionChange = (key: React.Key) => {
-    const find = data.find((point) => point.id == key);
+    if (!points) return;
+    const find = points.find((point) => point.id == key);
     if (!find) return console.log("Point not found");
     setSelectedPoint(find);
-    map!.flyTo({ center: [find.lng, find.lat], zoom: 16 });
+    const coords = find.feature.geometry.coordinates;
+    map!.flyTo({ center: coords, zoom: 16 });
+    directions(coords[0], coords[1]);
   };
 
-  const onInputChange = (value: string) => {
-    // TODO: On search update list, first implement a debounce
-    console.log(value);
-  };
+  useEffect(() => {
+    instance
+      .get("/places/all")
+      .then((res) => {
+        setPoints(res.data);
+      })
+      .catch((e) => console.error(e));
+  }, [selectedPoint]);
 
   return (
     <Card
-      className="w-5/6 mx-6 md:m-0 md:w-[45vw] bg-background/70 backdrop-blur h-full"
+      className="w-3/6 mx-6 md:m-0 md:w-[38vw] bg-background/70 backdrop-blur h-full"
       shadow="lg"
     >
       <CardHeader>
         <Autocomplete
           label="Select an interest point"
+          // @ts-ignore
           onSelectionChange={onSelectionChange}
-          onInputChange={onInputChange}
         >
-          {data.map((point) => (
-            <AutocompleteItem key={point.id} value={point.value}>
-              {point.name}
+          {points ? (
+            groupBy(points, "category").map((section: any, idx: number) => (
+              <AutocompleteSection
+                showDivider
+                title={section[0].category}
+                key={idx}
+              >
+                {section.map((point: any) => (
+                  <AutocompleteItem key={point.id} value={point.value}>
+                    {point.name}
+                  </AutocompleteItem>
+                ))}
+              </AutocompleteSection>
+            ))
+          ) : (
+            <AutocompleteItem key={0} value="none">
+              Nothing to search
             </AutocompleteItem>
-          ))}
+          )}
         </Autocomplete>
       </CardHeader>
       <CardBody>
@@ -52,15 +77,17 @@ export const Finder = () => {
           <PointDetails />
         ) : (
           <div className="grid grid-cols-2 grid-flow-row gap-4">
-            {data.map((point) => (
-              <PointCard key={point.id} point={point} />
-            ))}
+            {points ? (
+              points.map((point) => <PointCard key={point.id} point={point} />)
+            ) : (
+              <p>Theres no places to search</p>
+            )}
           </div>
         )}
       </CardBody>
       <Divider />
       <CardFooter className="text-xs text-gray-600">
-        {data.length} interest points found nearby.
+        {points?.length || 0} interest points found nearby.
       </CardFooter>
     </Card>
   );

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.unilocal.backend.dto.RegisterUserDTO;
@@ -112,11 +113,13 @@ public class UserService {
    * @throws throw new RuntimeException("User not found"); user not found
    */
   public User updatePassword(String id, String password) {
+     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     Optional<User> person = userRepository.findById(id);
     if (person.isEmpty())
       throw new RuntimeException("User not found");
     User updatedUser = person.get();
-    updatedUser.setPassword(password);
+    String hashedPassword = encoder.encode(password);
+    updatedUser.setPassword(hashedPassword);
     userRepository.save(updatedUser);
     return updatedUser;
 

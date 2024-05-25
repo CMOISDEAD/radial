@@ -9,15 +9,26 @@ import {
   User,
   Avatar,
 } from "@nextui-org/react";
-
-const userImage = "https://i.pravatar.cc/150?u=a042581f4e29026024d";
+import { useAppStore } from "../../store/useApp";
+import { notify } from "../../utils/notifications";
 
 export const UserDropdown = () => {
+  const { user, setUser, setToken } = useAppStore((state) => state);
   const { setTheme } = useTheme();
 
   const handleTheme = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
     setTheme(value.toLowerCase());
+  };
+
+  const handleLogout = () => {
+    notify({
+      type: "success",
+      msg: "You have been logged out successfully",
+    });
+    setUser(null);
+    setToken(null);
+    window.localStorage.clear();
   };
 
   return (
@@ -33,40 +44,45 @@ export const UserDropdown = () => {
       <DropdownTrigger>
         <Avatar
           isBordered
-          src={userImage}
+          showFallback
+          src={user?.image}
           size="sm"
-          color="primary"
+          color={user?.role === "ADMIN" ? "secondary" : "default"}
           className="cursor-pointer"
         />
       </DropdownTrigger>
       <DropdownMenu className="p-3">
-        <DropdownSection aria-label="Profile & Actions" showDivider>
-          <DropdownItem
-            key="profile"
-            textValue="Profile"
-            href="/user/user"
-            variant="flat"
-            color="primary"
-          >
-            <User
-              name="Junior Garcia"
-              description="@jrgarciadev"
-              classNames={{
-                name: "text-default-600",
-                description: "text-default-500",
-              }}
-              avatarProps={{
-                size: "sm",
-                src: userImage,
-              }}
-            />
-          </DropdownItem>
+        <DropdownSection aria-labelledby="Profile & Actions" showDivider>
+          {user ? (
+            <DropdownItem
+              key="profile"
+              textValue="Profile"
+              href={`/user/${user.username}`}
+              variant="flat"
+              color="primary"
+            >
+              <User
+                name={user?.name}
+                description={`@${user?.username}`}
+                classNames={{
+                  name: "text-default-600",
+                  description: "text-default-500",
+                }}
+                avatarProps={{
+                  size: "sm",
+                  src: user?.image,
+                }}
+              />
+            </DropdownItem>
+          ) : (
+            <p>No User</p>
+          )}
           <DropdownItem key="settings" textValue="settings" variant="flat">
             Settings
           </DropdownItem>
         </DropdownSection>
 
-        <DropdownSection aria-label="Preferences" showDivider>
+        <DropdownSection aria-labelledby="Preferences" showDivider>
           <DropdownItem
             isReadOnly
             variant="flat"
@@ -90,7 +106,7 @@ export const UserDropdown = () => {
           </DropdownItem>
         </DropdownSection>
 
-        <DropdownSection aria-label="Help & Feedback">
+        <DropdownSection aria-labelledby="Help & Feedback">
           <DropdownItem
             key="help_and_feedback"
             textValue="help_and_feedback"
@@ -104,6 +120,7 @@ export const UserDropdown = () => {
             href="/login"
             variant="flat"
             color="danger"
+            onClick={handleLogout}
           >
             LogOut
           </DropdownItem>

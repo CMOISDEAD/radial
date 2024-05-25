@@ -1,11 +1,17 @@
-export { };
+export {};
 
 declare global {
   interface Point {
-    id?: number; // FIX: id should be required
+    id: string;
+    userId: string;
     name: string;
     description: string;
-    img: string;
+    comments: any[];
+    images: string[];
+    feature: Feature;
+    numbers: string[];
+    schedule: any[];
+    checked: boolean;
     lat: number;
     lng: number;
   }
@@ -19,11 +25,14 @@ declare global {
     };
     geometry: {
       type: string;
-      coordinates: number[];
+      coordinates: [number, number];
     };
   }
 
   interface IUser {
+    id: string;
+    role: "ADMIN" | "USER";
+    image: string | undefined;
     name: string;
     lastname: string;
     username: string;

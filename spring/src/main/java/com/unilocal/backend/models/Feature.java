@@ -21,11 +21,21 @@ public class Feature {
   private Geometry geometry;
 }
 
+@Document
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 class Properties {
   String description;
   String icon;
 }
 
+@Document
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 class Geometry {
   String type;
   double[] coordinates;

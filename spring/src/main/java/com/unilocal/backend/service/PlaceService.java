@@ -3,6 +3,9 @@ package com.unilocal.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.unilocal.backend.dto.CommentDTO;
+import com.unilocal.backend.dto.DeleteCommentDTO;
+import com.unilocal.backend.models.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +71,44 @@ public class PlaceService {
     if (places.isEmpty())
       throw new RuntimeException("Place not found");
     return places.get();
+  }
+
+  public Place checkPlace(String id) {
+    Optional<Place> place = placeRepository.findById(id);
+    if (place.isEmpty())
+      throw new RuntimeException("Place not found");
+    place.get().setChecked(!place.get().isChecked());
+    return placeRepository.save(place.get());
+  }
+
+  // addComment
+    public Place addComment( CommentDTO dto) {
+        String id = dto.placeId();
+        Optional<Place> place = placeRepository.findById(id);
+        if (place.isEmpty()) throw new RuntimeException("Place not found");
+        Comment comment = new Comment(dto.date(), dto.userId(), dto.placeId(), dto.text());
+        place.get().addComment(comment);
+        return placeRepository.save(place.get());
+    }
+
+  public Place deleteComment(Comment comment) {
+    Optional<Place> place = placeRepository.findById(comment.getPlaceId());
+    if (place.isEmpty()) throw new RuntimeException("Place not found");
+    place.get().deleteComment(comment);
+    return placeRepository.save(place.get());
+  }
+
+  public Place update(Place place) {
+    Optional<Place> placeOptional = placeRepository.findById(place.getId());
+    if (placeOptional.isEmpty()) throw new RuntimeException("Place not found");
+    Place placeToUpdate = placeOptional.get();
+    placeToUpdate.setName(place.getName());
+    placeToUpdate.setDescription(place.getDescription());
+    placeToUpdate.setImages(place.getImages());
+    placeToUpdate.setCategory(place.getCategory());
+    placeToUpdate.setNumbers(place.getNumbers());
+    placeToUpdate.setFeature(place.getFeature());
+    placeToUpdate.setSchedule(place.getSchedule());
+    return placeRepository.save(placeToUpdate);
   }
 }

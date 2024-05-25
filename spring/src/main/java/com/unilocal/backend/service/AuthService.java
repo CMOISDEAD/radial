@@ -81,7 +81,7 @@ public class AuthService {
     map.put("id", user.getId());
     map.put("email", user.getEmail());
     TokenDTO token = new TokenDTO(jwtUtils.generateToken(user.getEmail(), map));
-    String url = "http://localhost:8080/auth/recover/" + token.token().toString();
+    String url = "http://localhost:5173/auth/recover/" + token.token().toString();
     System.out.println(url);
     // TODO: send an html button with the token on http request body
     EmailDTO message = new EmailDTO(email, "Recover Password, Link", url);

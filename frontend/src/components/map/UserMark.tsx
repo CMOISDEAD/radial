@@ -2,6 +2,7 @@ import { createRef } from "react";
 import { createRoot } from "react-dom/client";
 import { Avatar, Image, Tooltip } from "@nextui-org/react";
 import { Map, Marker } from "mapbox-gl";
+import { useAppStore } from "../../store/useApp";
 
 export const generateUserMarker = ({
   lat,
@@ -23,30 +24,36 @@ export const generateUserMarker = ({
 };
 
 const UserMark = () => {
-  const user = {
-    image: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    username: "username",
-  };
+  const { user } = useAppStore((state) => state);
 
   return (
     <Tooltip
       content={
         <div className="p-5 flex flex-col content-center items-center justify-center gap-2">
-          <Image
-            src={user.image}
-            alt="user image"
-            width={50}
-            height={50}
-            className="rounded-full"
-          />
-          <p className="text-center">{user.username}</p>
+          {user ? (
+            <div>
+              <Image
+                src={user.image}
+                fallbackSrc="https://placehold.co/300x200"
+                alt="user image"
+                width={50}
+                height={50}
+                className="rounded-full object-cover object-center"
+              />
+              <p className="text-center text-lg">{user.username}</p>
+              <p className="text-center text-xs">{user.role}</p>
+            </div>
+          ) : (
+            <p className="text-center font-bold text-xs">Please Log in</p>
+          )}
         </div>
       }
     >
       <Avatar
         isBordered
-        color="primary"
-        src={user.image}
+        showFallback
+        color={user?.role === "ADMIN" ? "secondary" : "default"}
+        src={user?.image}
         alt="user image marker"
         className="cursor-pointer"
       />

@@ -1,5 +1,8 @@
 package com.unilocal.backend.models;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale.Category;
 
 import org.springframework.data.annotation.Id;
@@ -19,29 +22,46 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class Place {
-  @Id
-  private String id;
+    @Id
+    private String id;
 
-  @NonNull
-  private String name;
-  @NonNull
-  private String description;
-  @NonNull
-  private String[] images;
-  @NonNull
-  private String category;
-  @NonNull
-  private String[] numbers;
-  @NonNull
-  private Feature feature;
-  @NonNull
-  private Schedule[] schedule;
-  @NonNull
-  private String userId;
+    @NonNull
+    private String name;
+    @NonNull
+    private String description;
+    @NonNull
+    private String[] images;
+    @NonNull
+    private String category;
+    @NonNull
+    private String[] numbers;
+    @NonNull
+    private Feature feature;
+    @NonNull
+    private Schedule[] schedule;
+    @NonNull
+    private String userId;
 
-  private long lat;
-  private long lon;
-  private PlaceStatus status;
-  private Category[] categories;
-  private Review[] reviews;
+    private boolean checked = false;
+
+    private long lat;
+    private long lon;
+    private PlaceStatus status;
+    private Category[] categories;
+    private Review[] reviews;
+    private ArrayList<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public void deleteComment(Comment comment) {
+        Iterator<Comment> iterator = comments.iterator();
+        while (iterator.hasNext()) {
+            Comment c = iterator.next();
+            if (c.getUserId().equals(comment.getUserId()) && c.getDate().equals(comment.getDate())) {
+                iterator.remove();
+            }
+        }
+    }
 }

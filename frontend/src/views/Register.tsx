@@ -13,10 +13,10 @@ import { instance } from "../api/instance";
 
 type Inputs = {
   name: string;
-  lastname: string;
   username: string;
   password: string;
   email: string;
+  country: string;
   city: string;
 };
 
@@ -39,7 +39,7 @@ export const Register = () => {
         navigate("/login");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         notify({
           msg: "Something went wrong!, please try again.",
           type: "error",
@@ -64,7 +64,7 @@ export const Register = () => {
                 required
                 type="text"
                 label="Name"
-                placeholder="Jhon Doe"
+                placeholder="John Doe"
                 className="max-w-xs"
                 {...register("name", { required: true })}
               />
@@ -74,12 +74,12 @@ export const Register = () => {
               <Input
                 required
                 type="text"
-                label="LastName"
+                label="Username"
                 placeholder="Smith"
                 className="max-w-xs"
-                {...register("lastname", { required: true })}
+                {...register("username", { required: true })}
               />
-              {errors.lastname && (
+              {errors.username && (
                 <p className="text-xs text-warning">This field is required</p>
               )}
               <Input
@@ -111,6 +111,14 @@ export const Register = () => {
                 placeholder="Armenia"
                 className="max-w-xs"
                 {...register("city", { required: true })}
+              />
+              <Input
+                required
+                type="text"
+                label="Country"
+                placeholder="Colombia"
+                className="max-w-xs"
+                {...register("country", { required: true })}
               />
               {errors.city && (
                 <p className="text-xs text-warning">This field is required</p>

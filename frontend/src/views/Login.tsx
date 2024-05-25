@@ -5,12 +5,15 @@ import {
   CardFooter,
   Input,
   Button,
+  Link,
 } from "@nextui-org/react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { notify } from "../utils/notifications";
 import { Social } from "../components/auth/Social";
 import { instance } from "../api/instance";
+import { useAppStore } from "../store/useApp";
+import { GenRecover } from "../components/auth/GenRecover";
 
 type Inputs = {
   username: string;
@@ -23,6 +26,7 @@ export const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+  const { setToken } = useAppStore((state) => state);
   const navigate = useNavigate();
 
   const handleLogIn: SubmitHandler<Inputs> = (data) => {
@@ -30,7 +34,7 @@ export const Login = () => {
     instance
       .post("/auth/login", { username, password })
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
+        setToken(res.data.token);
         notify({
           msg: "Logged In",
           type: "success",
@@ -38,7 +42,7 @@ export const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         notify({
           msg: "Something went wrong!, please try again.",
           type: "error",
@@ -90,21 +94,14 @@ export const Login = () => {
         </CardBody>
         <CardFooter className="flex flex-col gap-2 content-center justify-start items-start">
           <p className="text-xs text-neutral-500">
-            Don't remember your password?{" "}
-            <Link
-              to="#"
-              className="text-primary hover:text-success transition-colors"
-            >
-              Reset Password
-            </Link>
+            Don't remember your password? <GenRecover />
           </p>
           <p className="text-xs text-neutral-500">
             Don't have an account?{" "}
-            <Link
-              to="/"
-              className="text-primary hover:text-success transition-colors"
-            >
-              Sign Up
+            <Link href="/register">
+              <Button variant="flat" color="primary" size="sm">
+                Sign Up
+              </Button>
             </Link>
           </p>
         </CardFooter>

@@ -1,6 +1,13 @@
-import { Image, Tooltip } from "@nextui-org/react";
+import { Chip, Image, Tooltip, useDisclosure } from "@nextui-org/react";
+import { useAppStore } from "../../store/useApp";
+import { ChangeImage } from "./ChangeImage";
 
-export const ProfileHeader = ({ user }: any) => {
+export const ProfileHeader = () => {
+  const { user } = useAppStore((state) => state);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  if (!user) return;
+
   return (
     <header>
       <div className="flex gap-8 content-start items-center justify-start">
@@ -20,20 +27,31 @@ export const ProfileHeader = ({ user }: any) => {
             isBlurred
             radius="full"
             classNames={{
-              img: "w-32 max-h-fit cursor-pointer",
+              img: "w-32  h-32 cursor-pointer object-cover object-center",
               wrapper: "-top-7 left-5 z-40 border-2 border-primary",
             }}
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+            src={user.image}
+            fallbackSrc="https://placehold.co/300x200"
             alt="user image"
+            onClick={onOpen}
           />
         </Tooltip>
         <div className="my-5 mr">
-          <div className="flex flex-col">
-            <h3 className="text-3xl font-bold">Usuario</h3>
-            <p className="text-gray-600 text-xs">@usuario</p>
+          <div className="flex flex-col gap-1">
+            <h3 className="text-3xl font-bold">{user.name}</h3>
+            <div className="flex content-center items-center justify-center gap-3">
+              <Chip
+                size="sm"
+                color={user.role === "ADMIN" ? "secondary" : "primary"}
+              >
+                {user.role}
+              </Chip>
+              <p className="text-gray-600 text-xs">@{user.username}</p>
+            </div>
           </div>
         </div>
       </div>
+      <ChangeImage isOpen={isOpen} onOpenChange={onOpenChange} id={user.id} />
     </header>
   );
 };

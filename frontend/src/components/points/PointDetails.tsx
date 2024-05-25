@@ -4,16 +4,20 @@ import {
   Button,
   AvatarGroup,
   Avatar,
+  Chip,
 } from "@nextui-org/react";
 import { useAppStore } from "../../store/useApp";
 import { RxCalendar, RxCross1, RxHeart } from "react-icons/rx";
 import { CommentSection } from "./CommentSection";
 import { Options } from "./admin/Options";
+import { GoVerified } from "react-icons/go";
 
 export const PointDetails = () => {
-  const { selectedPoint: point, setSelectedPoint } = useAppStore(
-    (state) => state,
-  );
+  const {
+    user,
+    selectedPoint: point,
+    setSelectedPoint,
+  } = useAppStore((state) => state);
 
   if (!point) return null;
 
@@ -25,32 +29,32 @@ export const PointDetails = () => {
         size="sm"
         className="absolute top-2 right-0 z-20"
       >
-        <Options />
-        <Button>
-          <RxHeart className="text-success" />
-        </Button>
+        {(user?.role === "ADMIN" || point.userId === user?.id) && <Options />}
         <Button color="danger" onPress={() => setSelectedPoint(null)}>
           <RxCross1 />
         </Button>
       </ButtonGroup>
       <header className="flex content-center items-center justify-center">
         <Image
-          src={point.img}
+          src={point.images[0]}
           alt={`${point.name} image site`}
           className="h-56 max-w-lg object-cover w-full"
         />
       </header>
-      <div className="my-4">
-        <h3 className="text-2xl font-bold capitalize">{point.name}</h3>
+      <div className="my-5">
+        <div className="flex content-center justify-between">
+          <h3 className="text-2xl font-bold capitalize">{point.name}</h3>
+          {point.checked ? <GoVerified className="text-blue-600" /> : null}
+        </div>
         <p className="text-sm text-clip">{point.description}</p>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center my-5">
         <p className="text-sm flex content-center items-center gap-2">
-          <span className="font-bold text-foreground bg-success p-1 rounded">
+          <Chip size="sm" color="primary" variant="flat">
             OPEN
-          </span>
+          </Chip>
           <RxCalendar />
-          closes at 8:00 PM.
+          closes at {point.schedule[0].end_hour}
         </p>
         <AvatarGroup
           isBordered
